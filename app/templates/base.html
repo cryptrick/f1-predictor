@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{% block title %}linkstash{% endblock %}</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root { color-scheme: light dark; }
+  body { font: 15px/1.5 system-ui, sans-serif; max-width: 980px; margin: 1.5rem auto; padding: 0 1rem; }
+  header { display: flex; gap: 1rem; align-items: baseline; flex-wrap: wrap; margin-bottom: 1rem; }
+  header h1 { margin: 0; font-size: 1.2rem; }
+  header form { display: flex; gap: .5rem; flex-wrap: wrap; flex: 1; }
+  header input, header select { padding: .35rem .5rem; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: .45rem .35rem; text-align: left; border-bottom: 1px solid #8884; vertical-align: top; }
+  th { font-weight: 600; font-size: .85rem; opacity: .7; }
+  td.title a { font-weight: 500; }
+  td.url a { font-family: ui-monospace, monospace; font-size: .8rem; opacity: .7; word-break: break-all; }
+  .badge { display: inline-block; padding: .05rem .4rem; border-radius: .4rem; font-size: .75rem; background: #8883; }
+  .status-received { background: #88f5; }
+  .status-fetching { background: #ff85; }
+  .status-done { background: #5d5; color: #000; }
+  .status-error { background: #f55; color: #fff; }
+  pre { background: #8881; padding: .75rem; overflow: auto; font-size: .8rem; border-radius: .3rem; }
+  a { color: inherit; }
+  footer { margin-top: 2rem; opacity: .5; font-size: .8rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1><a href="/" style="text-decoration:none">linkstash</a></h1>
+  {% block header_extras %}{% endblock %}
+</header>
+{% block content %}{% endblock %}
+<footer>{% block footer %}{% endblock %}</footer>
+</body>
+</html>

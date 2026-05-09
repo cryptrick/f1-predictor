@@ -1,0 +1,22 @@
+# Drop this into your existing Caddyfile.
+#
+# WG-only access: bind Caddy to the WireGuard interface IP, OR use a
+# `@wg` matcher with `remote_ip` restricted to your WG subnet, e.g.
+# 10.8.0.0/24. The api container listens on 127.0.0.1:8731 on the host.
+#
+# Public TLS variant (replace the host):
+links.example.com {
+    encode zstd gzip
+    @wg remote_ip 10.8.0.0/24 192.168.0.0/16 127.0.0.0/8
+    handle @wg {
+        reverse_proxy 127.0.0.1:8731
+    }
+    handle {
+        respond "forbidden" 403
+    }
+}
+
+# WG-only variant (no public DNS / TLS, listen on tailnet/wg interface):
+# http://10.8.0.1:8080 {
+#     reverse_proxy 127.0.0.1:8731
+# }

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block header_extras %}
+<form method="get" action="/">
+  <input type="search" name="q" placeholder="search title, url, note" value="{{ q or '' }}">
+  <select name="site">
+    <option value="">all sites</option>
+    {% for s in sites %}<option value="{{ s }}" {% if s == site %}selected{% endif %}>{{ s }}</option>{% endfor %}
+  </select>
+  <select name="status">
+    <option value="">all statuses</option>
+    {% for s in ['received','fetching','done','error'] %}<option value="{{ s }}" {% if s == status %}selected{% endif %}>{{ s }}</option>{% endfor %}
+  </select>
+  <button type="submit">filter</button>
+</form>
+{% endblock %}
+
+{% block content %}
+{% if not links %}
+<p>No links yet. Forward something to the bot.</p>
+{% else %}
+<table>
+  <thead><tr><th>when</th><th>site</th><th>title / url</th><th>status</th></tr></thead>
+  <tbody>
+  {% for link in links %}
+    <tr>
+      <td><time datetime="{{ link.received_at.isoformat() }}">{{ link.received_at.strftime('%Y-%m-%d %H:%M') }}</time></td>
+      <td><span class="badge">{{ link.site }}</span></td>
+      <td class="title">
+        <a href="/links/{{ link.id }}">{{ link.title or link.url }}</a><br>
+        <span class="url"><a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.url }}</a></span>
+        {% if link.note %}<div style="opacity:.7;font-size:.85rem">{{ link.note }}</div>{% endif %}
+      </td>
+      <td><span class="badge status-{{ link.status }}">{{ link.status }}</span></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+{% endblock %}
+
+{% block footer %}{{ links|length }} shown{% endblock %}

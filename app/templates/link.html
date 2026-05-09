@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ link.title or link.url }}{% endblock %}
+{% block content %}
+<h2 style="margin-top:0">{{ link.title or '(no title yet)' }}</h2>
+<p><a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.url }}</a></p>
+<p>
+  <span class="badge">{{ link.site }}</span>
+  <span class="badge status-{{ link.status }}">{{ link.status }}</span>
+  <span class="badge">{{ link.source }}</span>
+</p>
+{% if link.description %}<p>{{ link.description }}</p>{% endif %}
+{% if link.note %}<p><strong>Note:</strong> {{ link.note }}</p>{% endif %}
+{% if link.error %}<h3>Error</h3><pre>{{ link.error }}</pre>{% endif %}
+{% if link.metadata_json %}<h3>Metadata</h3><pre>{{ link.metadata_json | tojson(indent=2) }}</pre>{% endif %}
+{% if link.ingest_payload %}<h3>Ingest payload</h3><pre>{{ link.ingest_payload | tojson(indent=2) }}</pre>{% endif %}
+<p><a href="/">&larr; back</a> · <a href="/links/{{ link.id }}.json">json</a></p>
+{% endblock %}
+{% block footer %}
+received {{ link.received_at.isoformat() }}{% if link.processed_at %} · processed {{ link.processed_at.isoformat() }}{% endif %}
+{% endblock %}
