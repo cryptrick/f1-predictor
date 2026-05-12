@@ -1,2 +1,3 @@
-# f1-predictor
-Personal Software - Predict F1 2025 standing based on customisable race results
+# linkstash
+Receive links (urls) from telegram and store them in postgress database for later analysis and browsing
+
